@@ -99,7 +99,10 @@ if selected_label:
                         <div>
                             <div style="color:#999;font-size:11px">Blended Growth</div>
                             <div style="font-size:14px;font-weight:600">{escape(str(row['Blended Growth']))}</div>
-                            <div style="color:#999;font-size:11px">({escape(str(row['Blended Value']))})</div>
+                        </div>
+                        <div>
+                            <div style="color:#999;font-size:11px">Blended Value</div>
+                            <div style="font-size:14px;font-weight:500">{escape(str(row['Blended Value']))}</div>
                         </div>
                     </div>
                     <div style="border-top:1px solid #333;padding-top:8px;margin-bottom:8px;color:#999;font-size:11px">
