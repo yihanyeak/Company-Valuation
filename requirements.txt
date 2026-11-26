@@ -14,7 +14,6 @@ import plotly.io as pio
 import streamlit as st
 from streamlit_searchbox import st_searchbox
 import st_yled
-st_yled.init()
 import yfinance as yf
 
 from company_fundamental import CompanyFundamental
