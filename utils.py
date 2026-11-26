@@ -127,12 +127,17 @@ def fetch_estimates(ticker):
     stock = yf.Ticker(ticker)
 
     forecast = {
-        "revenue_estimate": stock.get_revenue_estimate(), # revenue
-        "earnings_estimate": stock.get_earnings_estimate(), # eps
-        # "growth_estimate": stock.get_growth_estimates(),
-        # "eps_revisions": stock.get_eps_revisions(),
-        # "eps_trend": stock.get_eps_trend()
+        "revenue_estimate": stock.get_revenue_estimate(),  # revenue
+        "earnings_estimate": stock.get_earnings_estimate(),  # eps
     }
+
+    for key, val in forecast.items():
+        if val is None:
+            print(f"[RAW {ticker} {key}]: None")
+        elif hasattr(val, "to_dict"):
+            print(f"[RAW {ticker} {key}] empty={val.empty} cols={list(val.columns)} idx={list(val.index)} data={val.to_dict()}")
+        else:
+            print(f"[RAW {ticker} {key}]: {repr(val)}")
 
     return forecast
 
