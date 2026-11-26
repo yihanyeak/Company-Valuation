@@ -1,21 +1,9 @@
-from datetime import datetime
-from html import escape
-import re
-from textwrap import dedent
-import warnings
-
-from edgar import *
-from fredapi import Fred
-import numpy as np
-import pandas as pd
-import plotly.express as px
-import plotly.graph_objects as go
-import plotly.io as pio
-import streamlit as st
-from streamlit_searchbox import st_searchbox
-import st_yled
-import yfinance as yf
-
-from company_fundamental import CompanyFundamental
-from financial_statement import FinancialStatement
-import utils
+streamlit
+pandas
+numpy
+plotly
+yfinance
+edgartools
+fredapi
+streamlit-searchbox
+st-styled
