@@ -127,17 +127,12 @@ def fetch_estimates(ticker):
     stock = yf.Ticker(ticker)
 
     forecast = {
-        "revenue_estimate": stock.get_revenue_estimate(),  # revenue
-        "earnings_estimate": stock.get_earnings_estimate(),  # eps
+        "revenue_estimate": stock.get_revenue_estimate(), # revenue
+        "earnings_estimate": stock.get_earnings_estimate(), # eps
+        # "growth_estimate": stock.get_growth_estimates(),
+        # "eps_revisions": stock.get_eps_revisions(),
+        # "eps_trend": stock.get_eps_trend()
     }
-
-    for key, val in forecast.items():
-        if val is None:
-            print(f"[RAW {ticker} {key}]: None")
-        elif hasattr(val, "to_dict"):
-            print(f"[RAW {ticker} {key}] empty={val.empty} cols={list(val.columns)} idx={list(val.index)} data={val.to_dict()}")
-        else:
-            print(f"[RAW {ticker} {key}]: {repr(val)}")
 
     return forecast
 
@@ -528,7 +523,7 @@ def cal_fundamentals(ticker, rating_sensitivity, user_input_value, user_input_re
 
     # (name, metric, forecast, type) -- user_input_value / user_input_relevance are matched by position
     metrics_to_evaluate = [
-        ('Revenue', inc.loc['Revenues'], rev_fc_avg, 'growth'),
+        ('Revenue', inc.loc['Revenues'], None, 'growth'),
         ('Gross Margin', inc.loc['GrossProfit'] / inc.loc['Revenues'], None, 'ratio'),
         ('Interest Coverage', inc.loc['OperatingIncomeLoss'] / inc.loc['InterestExpense'], None, 'ratio'),
         ('Net Income', inc.loc['NetIncomeLoss'], None, 'growth'),
@@ -539,7 +534,7 @@ def cal_fundamentals(ticker, rating_sensitivity, user_input_value, user_input_re
         ('Stock Based Compensation', cf.loc['ShareBasedCompensation'], None, 'nominal'),
         ('Free Cash Flow', cf.loc['NetCashProvidedByUsedInOperatingActivities'] - cf.loc['PaymentsToAcquirePropertyPlantAndEquipment'], None, 'growth'),
         ('Return on Invested Capital', (inc_roic.loc['OperatingIncomeLoss'] * (1 - (inc_roic.loc['IncomeTaxExpenseBenefit'] / (inc_roic.loc['NetIncomeLoss'] + inc_roic.loc['IncomeTaxExpenseBenefit']))).values / (total_debt + bs.loc['StockholdersEquity'] - bs.loc['CashAndCashEquivalentsAtCarryingValue']).values), None, 'ratio'),
-        ('PE ratio', (inc.loc['StockPrice'].values * inc.loc['StockSplit'].values) / inc.loc['EarningsPerShareDiluted'], inc.loc['StockPrice'].iloc[-1] / eps_fc_avg, 'ratio')
+        ('PE ratio', (inc.loc['StockPrice'].values * inc.loc['StockSplit'].values) / inc.loc['EarningsPerShareDiluted'], None, 'ratio')
     ]
 
     final_df = pd.DataFrame([
