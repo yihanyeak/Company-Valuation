@@ -515,9 +515,6 @@ def cal_fundamentals(ticker, rating_sensitivity, user_input_value, user_input_re
         'Revenue': inc.loc['Revenues', latest_col_inc]
     }
 
-    if forecast is not None:
-        rev_fc_avg, eps_fc_avg = [forecast.get(k).loc[['0y', '+1y'], 'avg'] for k in ['revenue_estimate', 'earnings_estimate']]
-
     # Shared Calculation Metrics
     total_debt = (bs.reindex(['DebtCurrent']).iloc[0].fillna(0) + bs.reindex(['LongTermDebtNoncurrent']).iloc[0].fillna(0))
 
